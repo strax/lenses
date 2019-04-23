@@ -7,7 +7,7 @@ tshkt@0.1.1:
   resolved "https://registry.yarnpkg.com/tshkt/-/tshkt-0.1.1.tgz#c1bae34cba9b3a98c9359c412496846b16cdc611"
   integrity sha512-mp5+QXZFx2gLgNJJn6RkvDuJSHl9y6HaZktiefg/28gpNpoOn32Q8c5xkoNe0pzDJHKYMQYS//G6OD1DlbiDDw==
 
-typescript@^3.5.0-dev.20190417:
-  version "3.5.0-dev.20190417"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.0-dev.20190417.tgz#a0100dc18b6d70b3f5e0ff3b12c07b60b2ec9e85"
-  integrity sha512-t8SnOGF5KDa5igfO2QnIfcbdOLPsD+GWBLNr4XmpltU9OAcOr6zEBeOlAF1IJ4X4WRIpQLPqOzBfjYpJ4JZBzw==
+typescript@3.4.4:
+  version "3.4.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.4.tgz#aac4a08abecab8091a75f10842ffa0631818f785"
+  integrity sha512-xt5RsIRCEaf6+j9AyOBgvVuAec0i92rgCaS3S+UVf5Z/vF2Hvtsw08wtUTJqp4djwznoAgjSxeCcU4r+CcDBJA==

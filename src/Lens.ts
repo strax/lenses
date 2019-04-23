@@ -24,6 +24,13 @@ export class Lens<S, A> {
       ss => a => source.into(this.set(source.from(ss), a))
     )
   }
+
+  composeLens<SS>(source: Lens<SS, S>): Lens<SS, A> {
+    return new Lens(
+      ss => this.get(source.get(ss)),
+      ss => a => source.set(ss, this.set(source.get(ss), a))
+    )
+  }
 }
 
 interface ComposeLens<F, A, B> {

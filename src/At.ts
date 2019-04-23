@@ -23,3 +23,7 @@ export class At<K extends string> {
 interface ComposeAt<F, K extends string, A, B> {
   composeAt(source: At<K>): Of<F, [Record<K, A>, B]>
 }
+
+export function at<K extends string>(key: K): At<K> {
+  return At.at(key)
+}
