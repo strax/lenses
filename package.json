@@ -1,12 +1,13 @@
 {
   "name": "@strax/optics",
   "version": "1.0.0",
-  "main": "index.js",
   "license": "MIT",
+  "main": "target/index.js",
+  "typings": "target/index.d.ts",
   "dependencies": {
     "tshkt": "0.1.1"
   },
   "devDependencies": {
-    "typescript": "3.4.4"
+    "typescript": "next"
   }
 }

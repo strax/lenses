@@ -2,7 +2,7 @@ import { Generic, Of, Repr } from "tshkt";
 import { Iso } from "./Iso";
 
 export class Lens<S, A> {
-  [Generic.repr]: Generic<LensRepr, [S, A]>
+  [Generic.repr]: Generic<Lens$λ, [S, A]>
 
   constructor(private _get: (s: S) => A, private _set: (s: S) => (a: A) => S) {}
 
@@ -18,6 +18,9 @@ export class Lens<S, A> {
     return other.composeLens(this)
   }
 
+  /**
+   * @internal
+   */
   composeIso<SS>(source: Iso<SS, S>): Lens<SS, A> {
     return new Lens(
       ss => this.get(source.from(ss)),
@@ -25,6 +28,9 @@ export class Lens<S, A> {
     )
   }
 
+  /**
+   * @internal
+   */
   composeLens<SS>(source: Lens<SS, S>): Lens<SS, A> {
     return new Lens(
       ss => this.get(source.get(ss)),
@@ -37,6 +43,6 @@ interface ComposeLens<F, A, B> {
   composeLens<S>(source: Lens<S, A>): Of<F, [S, B]>
 }
 
-interface LensRepr extends Repr {
+export interface Lens$λ extends Repr {
   type: this["argument"] extends [infer A, infer B] ? Lens<A, B> : never
 }

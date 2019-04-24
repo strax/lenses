@@ -1,29 +1,99 @@
-import { Of } from "tshkt";
+import { Of, Repr, Generic } from "tshkt";
+import { Lens } from "./Lens";
+import { ToObj, Compose, Composition, Witnessing, TypeFunction1, TypeFunction2 } from "./TypeFunctions";
 
-export class At<K extends string> {
-  constructor(private key: K) {}
+// export type SynthesizeObject<P extends Path, V> = [] extends P ? V : {
+//   [K in Head<P>]: SynthesizeObject<Tail<P>, V>
+// }
+
+interface At$λ extends Repr {
+  type: At<this["argument"]>
+}
+
+interface At$Λ extends TypeFunction2 {
+  type: At<this["arguments"][0]>
+}
+
+export namespace ComposeAt {
+  export declare const Result: unique symbol
+}
+
+export class At<S> {
+  [ComposeAt.Result]: At$Composite$λ
+  [Generic.repr]: Generic<At$λ, S>
+
+  constructor() {}
 
   static at<K extends string>(key: K) {
-    return new At(key)
+    return new At<ToObj<K>>([key])
   }
 
-  get<A>(source: { [_ in K]: A }): A {
-    return source[this.key]
+  get<A>(source: Of<S, A>): A {
+    throw new Error("unimplemented")
   }
 
-  set<S extends { [_ in K]: A }, A>(source: S, a: A): S {
+  set<SA extends Of<S, A>, A>(source: SA, a: A): SA {
     return { ...source, a }
   }
 
-  compose<F, A, B>(other: ComposeAt<F, K, A, B>): Of<F, [Record<K, A>, B]> {
+  compose<F extends TypeFunction2, T>(other: ComposeAt<F, T>): Of<F, [S, T]> {
     return other.composeAt(this)
+  }
+
+  composeAt<G>(from: At<G>): At$Composite<G, S> {
+    throw new Error("Not implemented")
+  }
+
+  toLens<A>(): Lens<Of<S, A>, A> {
+    return new Lens<Of<S, A>, A>(this.get, s => a => this.set(s, a))
   }
 }
 
-interface ComposeAt<F, K extends string, A, B> {
-  composeAt(source: At<K>): Of<F, [Record<K, A>, B]>
+interface At$Composite$λ extends TypeFunction2 {
+  type: At$Composite<this["arguments"][0], this["arguments"][1]>
+}
+class At$Composite<T, U> {
+  [Generic.repr]: Generic<At$Composite$λ, [T, U]>
+
+  constructor(private first: At<T>, private second: At<U>) {
+  }
+
+  get<A>(source: Of<Composition<T, U>, A>): A {
+    return this.second.get(this.first.get(source))
+  }
+
+  set<SA extends Of<Composition<T, U>, A>, A>(source: SA, a: A): SA {
+    return this.first.set(source, this.second.set(this.first.get(source) as Of<U, A>, a))
+  }
+
+  compose<F extends TypeFunction2, R>(other: ComposeAt<F, R>): Of<F, [Composition<T, U>, R]> {
+    return other.composeAt(this.reify())
+  }
+
+  reify() {
+    type S = Composition<T, U>
+
+    const composite = this
+    const at = new class At$reified extends At<S> {
+      get<SA extends Of<S, A>, A>(source: SA): A {
+        return composite.get(source) as A
+      }
+
+      // @ts-ignore 2416
+      set<SA extends Of<S, A>, A>(source: SA, a: A): SA {
+        return composite.set(source, a)
+      }
+    }
+    return at as At<S>
+  }
 }
 
-export function at<K extends string>(key: K): At<K> {
+export interface ComposeAt<F extends TypeFunction2, T> {
+  [ComposeAt.Result]: F
+  composeAt<S>(source: At<S>): Of<F, [S, T]>
+}
+
+
+export function at<K extends string>(key: K): At<ToObj<K>> {
   return At.at(key)
 }
