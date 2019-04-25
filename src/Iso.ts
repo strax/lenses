@@ -1,7 +1,8 @@
 import { Generic, Repr, Of } from "tshkt";
-import { At, ComposeAt, at } from "./At";
+import { At, at } from "./At";
 import { Lens, Lens$λ } from "./Lens";
 import { TypeFunction2 } from "./TypeFunctions";
+import { ComposeAt } from "./ComposeAt";
 
 interface AtIso$λ<A> extends TypeFunction2 {
   type: Lens<Of<this["arguments"][0], A>, this["arguments"][1]>

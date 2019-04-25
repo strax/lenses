@@ -1,7 +1,8 @@
 import { Lens } from "./Lens";
 import { Iso } from "./Iso";
-import { at, ComposeAt } from "./At";
+import { at } from "./At";
 import { TypeFunction2 } from "./TypeFunctions";
+import { ComposeAt } from "./ComposeAt";
 
 declare const x: Lens<{ foo: string }, string>
 declare const iso: Iso<string, number>
@@ -19,3 +20,5 @@ iso.composeAt(at("foo"))
 function intoComposeAt<S extends TypeFunction2, T>(cat: ComposeAt<S, T>) {
   return cat
 }
+
+const cat = intoComposeAt(iso)

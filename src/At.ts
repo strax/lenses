@@ -1,6 +1,7 @@
 import { Of, Repr, Generic } from "tshkt";
 import { Lens } from "./Lens";
-import { ToObj, Compose, Composition, Witnessing, TypeFunction1, TypeFunction2 } from "./TypeFunctions";
+import { ToObj, Composition, TypeFunction2 } from "./TypeFunctions";
+import { ComposeAt } from "./ComposeAt";
 
 // export type SynthesizeObject<P extends Path, V> = [] extends P ? V : {
 //   [K in Head<P>]: SynthesizeObject<Tail<P>, V>
@@ -8,10 +9,6 @@ import { ToObj, Compose, Composition, Witnessing, TypeFunction1, TypeFunction2 }
 
 interface At$λ extends Repr {
   type: At<this["argument"]>
-}
-
-export namespace ComposeAt {
-  export declare const Result: unique symbol
 }
 
 export class At<S> {
@@ -84,10 +81,6 @@ class At$Composite<T, U> {
   }
 }
 
-export interface ComposeAt<F extends TypeFunction2, T> {
-  [ComposeAt.Result]: F
-  composeAt<S>(source: At<S>): Of<F, [S, T]>
-}
 
 
 export function at<K extends string>(key: K): At<ToObj<K>> {
