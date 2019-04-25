@@ -4,7 +4,7 @@ import { Assert, Eq } from "./TestUtils";
 
 // #region Composing At with Iso
 
-namespace Test$ComposingAtWithIso {
+namespace Test$CompositionWithAt {
   declare const iso: Iso<number, string>
   const res = at("foo").compose(iso)
   type _ = Assert<Eq<typeof res, Lens<{ foo: number }, string>>>
@@ -14,7 +14,7 @@ namespace Test$ComposingAtWithIso {
 
 // #region Composing Lens with Iso
 
-namespace Test$ComposingLensWithIso {
+namespace Test$CompositionWithLens {
   declare const fst: Lens<[number, string], string>
   declare const iso: Iso<string, number>
 
