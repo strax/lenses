@@ -1,6 +1,7 @@
 import { Lens } from "./Lens";
 import { Iso } from "./Iso";
-import { at } from "./At";
+import { at, ComposeAt } from "./At";
+import { TypeFunction2 } from "./TypeFunctions";
 
 declare const x: Lens<{ foo: string }, string>
 declare const iso: Iso<string, number>
@@ -11,8 +12,10 @@ declare const firstChar: Lens<string, [string]>
 iso.inverse().compose(firstChar)
 
 at("foo").compose(at("bar"))
+at("foo").compose(iso)
 
-const atFoo = at("foo").compose(iso)
 iso.composeAt(at("foo"))
 
-const composite1 = atFoo.compose(iso) // Lens<Record<"foo", string>, number>
+function intoComposeAt<S extends TypeFunction2, T>(cat: ComposeAt<S, T>) {
+  return cat
+}

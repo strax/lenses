@@ -1,5 +1,5 @@
 import { Generic, Repr, Of } from "tshkt";
-import { At, ComposeAt } from "./At";
+import { At, ComposeAt, at } from "./At";
 import { Lens, Lens$λ } from "./Lens";
 import { TypeFunction2 } from "./TypeFunctions";
 
@@ -8,8 +8,8 @@ interface AtIso$λ<A> extends TypeFunction2 {
 }
 
 export class Iso<A, B> implements ComposeAt<AtIso$λ<A>, B> {
-  [ComposeAt.TypeFamily]: AtIso$λ<A>
-  [Generic.repr]: Generic<IsoRepr, [A, B]>
+  [ComposeAt.Result]: AtIso$λ<A>
+  [Generic.repr]: Generic<Iso$λ, [A, B]>
 
   constructor(private _from: (a: A) => B, private _into: (b: B) => A) {}
 
@@ -61,6 +61,9 @@ interface ComposeIso<F, A, B, C> {
   composeIso(source: Iso<A, B>): Of<F, [A, C]>
 }
 
-interface IsoRepr extends Repr {
-  type: this["argument"] extends [infer A, infer B] ? Iso<A, B> : never
+declare const x: Iso<string, number>
+const atFoo = at("foo").compose(x)
+
+interface Iso$λ extends TypeFunction2 {
+  type: Iso<this["arguments"][0], this["arguments"][1]>
 }

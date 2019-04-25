@@ -1,5 +1,6 @@
 import { Generic, Of, Repr } from "tshkt";
 import { Iso } from "./Iso";
+import { TypeFunction2 } from "./TypeFunctions";
 
 export class Lens<S, A> {
   [Generic.repr]: Generic<Lens$λ, [S, A]>
@@ -43,6 +44,6 @@ interface ComposeLens<F, A, B> {
   composeLens<S>(source: Lens<S, A>): Of<F, [S, B]>
 }
 
-export interface Lens$λ extends Repr {
-  type: this["argument"] extends [infer A, infer B] ? Lens<A, B> : never
+export interface Lens$λ extends TypeFunction2 {
+  type: Lens<this["arguments"][0], this["arguments"][1]>
 }

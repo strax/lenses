@@ -10,10 +10,6 @@ interface At$λ extends Repr {
   type: At<this["argument"]>
 }
 
-interface At$Λ extends TypeFunction2 {
-  type: At<this["arguments"][0]>
-}
-
 export namespace ComposeAt {
   export declare const Result: unique symbol
 }
@@ -74,7 +70,7 @@ class At$Composite<T, U> {
     type S = Composition<T, U>
 
     const composite = this
-    const at = new class At$reified extends At<S> {
+    const at = new class At$Composite$Reified extends At<S> {
       get<SA extends Of<S, A>, A>(source: SA): A {
         return composite.get(source) as A
       }
