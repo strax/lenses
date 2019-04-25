@@ -3,10 +3,6 @@ import { Lens } from "./Lens";
 import { ToObj, Composition, TypeFunction2 } from "./TypeFunctions";
 import { ComposeAt } from "./ComposeAt";
 
-// export type SynthesizeObject<P extends Path, V> = [] extends P ? V : {
-//   [K in Head<P>]: SynthesizeObject<Tail<P>, V>
-// }
-
 interface At$λ extends Repr {
   type: At<this["argument"]>
 }
@@ -61,6 +57,10 @@ class At$Composite<T, U> {
 
   compose<F extends TypeFunction2, R>(other: ComposeAt<F, R>): Of<F, [Composition<T, U>, R]> {
     return other.composeAt(this.reify())
+  }
+
+  toLens<A>(): Lens<Of<Composition<T, U>, A>, A> {
+    return this.reify().toLens()
   }
 
   reify() {

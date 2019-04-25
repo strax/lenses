@@ -11,13 +11,3 @@ namespace Test$CompositionWithAt {
 }
 
 // #endregion
-
-// #region Composing Lens with At
-
-namespace Test$CompositionWithLens {
-  declare const fst: Lens<[number, { foo: string }], { foo: string }>
-  const res = fst.compose(at("foo"))
-  type _ = Assert<Eq<typeof res, Lens<[number, { foo: string }], string>>>
-}
-
-// #region
