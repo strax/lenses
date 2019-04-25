@@ -1,6 +1,6 @@
-import { Generic, Repr, Of } from "tshkt";
+import { Generic, Of } from "tshkt";
 import { At, at } from "./At";
-import { Lens, Lens$λ } from "./Lens";
+import { Lens } from "./Lens";
 import { TypeFunction2 } from "./TypeFunctions";
 import { ComposeAt } from "./ComposeAt";
 
@@ -8,7 +8,7 @@ interface AtIso$λ<A> extends TypeFunction2 {
   type: Lens<Of<this["arguments"][0], A>, this["arguments"][1]>
 }
 
-export class Iso<A, B> implements ComposeAt<AtIso$λ<A>, B> {
+export class Iso<A, B> {
   [ComposeAt.Result]: AtIso$λ<A>
   [Generic.repr]: Generic<Iso$λ, [A, B]>
 
