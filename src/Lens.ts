@@ -1,6 +1,12 @@
 import { Generic, Of, Repr } from "tshkt";
 import { Iso } from "./Iso";
 import { TypeFunction2 } from "./TypeFunctions";
+import { At } from "./At";
+import { ComposeAt } from "./ComposeAt";
+
+interface AtLens$λ<S> extends TypeFunction2 {
+  type: Lens<Of<this["arguments"][0], S>, this["arguments"][1]>
+}
 
 export class Lens<S, A> {
   [Generic.repr]: Generic<Lens$λ, [S, A]>
@@ -37,6 +43,11 @@ export class Lens<S, A> {
       ss => this.get(source.get(ss)),
       ss => a => source.set(ss, this.set(source.get(ss), a))
     )
+  }
+
+  [ComposeAt.Result]: AtLens$λ<S>
+  composeAt<F>(source: At<F>): Lens<Of<F, S>, A> {
+    throw "oh no"
   }
 }
 

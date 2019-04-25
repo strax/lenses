@@ -18,7 +18,7 @@ export class At<S> {
   constructor() {}
 
   static at<K extends string>(key: K) {
-    return new At<ToObj<K>>([key])
+    return new At<ToObj<K>>()
   }
 
   get<A>(source: Of<S, A>): A {
