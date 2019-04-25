@@ -3,6 +3,7 @@ import { Iso } from "./Iso";
 import { TypeFunction2 } from "./TypeFunctions";
 import { At } from "./At";
 import { ComposeAt } from "./ComposeAt";
+import { ComposeLens } from "./ComposeLens";
 
 interface AtLens$λ<S> extends TypeFunction2 {
   type: Lens<Of<this["arguments"][0], S>, this["arguments"][1]>
@@ -51,9 +52,7 @@ export class Lens<S, A> {
   }
 }
 
-interface ComposeLens<F, A, B> {
-  composeLens<S>(source: Lens<S, A>): Of<F, [S, B]>
-}
+
 
 export interface Lens$λ extends TypeFunction2 {
   type: Lens<this["arguments"][0], this["arguments"][1]>
