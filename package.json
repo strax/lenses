@@ -8,6 +8,7 @@
     "tshkt": "0.1.1"
   },
   "devDependencies": {
-    "typescript": "^3.5.0-dev.20190426"
+    "typescript": "^3.5.0-dev.20190426",
+    "prettier": "1.17.0"
   }
 }
