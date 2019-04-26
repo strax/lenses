@@ -11,3 +11,9 @@ namespace Test$CompositionWithAt {
 }
 
 // #endregion
+
+namespace Test$CompositeAtValueInference {
+  const res = at("foo").at("bar").get({ foo: {bar: "value" as const }})
+  // @ts-ignore FIXME: Value type of the optic should be inferred from the source argument
+  type _ = Assert<Eq<typeof res, "value">>
+}

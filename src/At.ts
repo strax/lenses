@@ -101,8 +101,6 @@ class At$Composite<T, U> {
   }
 }
 
-
-
 export function at<K extends string>(key: K): At<ToObj<K>> {
   return At.at(key)
 }
