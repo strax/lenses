@@ -8,6 +8,6 @@
     "tshkt": "0.1.1"
   },
   "devDependencies": {
-    "typescript": "next"
+    "typescript": "^3.5.0-dev.20190426"
   }
 }

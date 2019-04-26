@@ -36,6 +36,9 @@ export class Iso<A, B> {
     )
   }
 
+  /**
+   * @internal
+   */
   composeAt<S>(at: At<S>): Lens<Of<S, A>, B> {
     return new Lens(
       s => this.from(at.get(s)),
@@ -61,9 +64,6 @@ export class Iso<A, B> {
 interface ComposeIso<F, A, B, C> {
   composeIso(source: Iso<A, B>): Of<F, [A, C]>
 }
-
-declare const x: Iso<string, number>
-const atFoo = at("foo").compose(x)
 
 interface Iso$λ extends TypeFunction2 {
   type: Iso<this["arguments"][0], this["arguments"][1]>

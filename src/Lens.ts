@@ -67,8 +67,12 @@ export class Lens<S, A> implements SetterLike<S, A> {
   }
 
   [ComposeAt.Result]: AtLens$λ<S>
+
+  /**
+   * @internal
+   */
   composeAt<F>(source: At<F>): Lens<Of<F, S>, A> {
-    throw "oh no"
+    return source.toLens<S>().compose(this)
   }
 }
 

@@ -17,6 +17,16 @@ export class At<S> {
     return new At<ToObj<K>>()
   }
 
+  /**
+   * Shorthand for
+   * ```typescript
+   * optic.compose(at(key))
+   * ```
+   */
+  at<K extends string>(key: K): At$Composite<S, ToObj<K>> {
+    return this.compose(At.at(key))
+  }
+
   get<A>(source: Of<S, A>): A {
     throw new Error("unimplemented")
   }
@@ -29,6 +39,9 @@ export class At<S> {
     return other.composeAt(this)
   }
 
+  /**
+   * @internal
+   */
   composeAt<G>(from: At<G>): At$Composite<G, S> {
     throw new Error("Not implemented")
   }
@@ -47,6 +60,10 @@ class At$Composite<T, U> {
   constructor(private first: At<T>, private second: At<U>) {
   }
 
+  at<K extends string>(key: K) {
+    return this.reify().at(key)
+  }
+
   get<A>(source: Of<Composition<T, U>, A>): A {
     return this.second.get(this.first.get(source))
   }
@@ -63,6 +80,9 @@ class At$Composite<T, U> {
     return this.reify().toLens()
   }
 
+  /**
+   * @internal
+   */
   reify() {
     type S = Composition<T, U>
 
