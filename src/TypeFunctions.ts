@@ -1,4 +1,4 @@
-import { Repr, Of, Generic } from "tshkt";
+import { Repr, Of, Generic } from "tshkt"
 
 namespace Witnessing {
   export declare const witness: unique symbol
@@ -8,8 +8,7 @@ export interface Witnessing<T> {
   [Witnessing.witness]: T
 }
 
-export interface TypeFunction1 extends Repr {
-}
+export interface TypeFunction1 extends Repr {}
 
 export interface TypeFunction2 extends Repr {
   arguments: this["argument"] extends [infer A, infer B] ? [A, B] : never

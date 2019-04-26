@@ -1,6 +1,6 @@
-import { TypeFunction2 } from "./TypeFunctions";
-import { At } from "./At";
-import { Of } from "tshkt";
+import { TypeFunction2 } from "./TypeFunctions"
+import { At } from "./At"
+import { Of } from "tshkt"
 
 export namespace ComposeAt {
   export declare const Result: unique symbol

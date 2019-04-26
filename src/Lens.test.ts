@@ -1,6 +1,6 @@
-import { Lens } from ".";
-import { Assert, Eq } from "./TestUtils";
-import { at } from "./At";
+import { Lens } from "."
+import { Assert, Eq } from "./TestUtils"
+import { at } from "./At"
 
 // #region Composing Lens with Lens
 

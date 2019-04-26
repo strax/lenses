@@ -1,17 +1,16 @@
-import { Generic, Of, Repr } from "tshkt";
-import { Iso } from "./Iso";
-import { TypeFunction2 } from "./TypeFunctions";
-import { At } from "./At";
-import { ComposeAt } from "./ComposeAt";
-import { ComposeLens } from "./ComposeLens";
-import { SetterLike } from "./SetterLike";
+import { Generic, Of, Repr } from "tshkt"
+import { Iso } from "./Iso"
+import { TypeFunction2 } from "./TypeFunctions"
+import { At } from "./At"
+import { ComposeAt } from "./ComposeAt"
+import { ComposeLens } from "./ComposeLens"
+import { SetterLike } from "./SetterLike"
 
 interface AtLens$λ<S> extends TypeFunction2 {
   type: Lens<Of<this["arguments"][0], S>, this["arguments"][1]>
 }
 
-type Fields<T> = keyof T extends infer K ? K extends keyof T ? T[K] extends Function ? never : K : never : never
-
+type Fields<T> = keyof T extends infer K ? (K extends keyof T ? (T[K] extends Function ? never : K) : never) : never
 
 export class Lens<S, A> implements SetterLike<S, A> {
   static id<S>(): Lens<S, S> {
@@ -36,10 +35,7 @@ export class Lens<S, A> implements SetterLike<S, A> {
   }
 
   at<K extends Fields<A>>(key: K): Lens<S, A[K]> {
-    return new Lens(
-      s => this.get(s)[key],
-      s => b => ({ ...s, [key]: b })
-    )
+    return new Lens(s => this.get(s)[key], s => b => ({ ...s, [key]: b }))
   }
 
   compose<F, B>(other: ComposeLens<F, A, B>): Of<F, [S, B]> {
@@ -50,20 +46,14 @@ export class Lens<S, A> implements SetterLike<S, A> {
    * @internal
    */
   composeIso<SS>(source: Iso<SS, S>): Lens<SS, A> {
-    return new Lens(
-      ss => this.get(source.from(ss)),
-      ss => a => source.into(this.set(source.from(ss), a))
-    )
+    return new Lens(ss => this.get(source.from(ss)), ss => a => source.into(this.set(source.from(ss), a)))
   }
 
   /**
    * @internal
    */
   composeLens<SS>(source: Lens<SS, S>): Lens<SS, A> {
-    return new Lens(
-      ss => this.get(source.get(ss)),
-      ss => a => source.set(ss, this.set(source.get(ss), a))
-    )
+    return new Lens(ss => this.get(source.get(ss)), ss => a => source.set(ss, this.set(source.get(ss), a)))
   }
 
   [ComposeAt.Result]: AtLens$λ<S>

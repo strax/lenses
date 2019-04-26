@@ -1,7 +1,7 @@
-import { Of, Repr, Generic } from "tshkt";
-import { Lens } from "./Lens";
-import { ToObj, Composition, TypeFunction2 } from "./TypeFunctions";
-import { ComposeAt } from "./ComposeAt";
+import { Of, Repr, Generic } from "tshkt"
+import { Lens } from "./Lens"
+import { ToObj, Composition, TypeFunction2 } from "./TypeFunctions"
+import { ComposeAt } from "./ComposeAt"
 
 interface At$λ extends Repr {
   type: At<this["argument"]>
@@ -37,7 +37,7 @@ export namespace At {
 }
 
 class At$AtIndex<K extends string> extends At<ToObj<K>> {
-  [Generic.repr]: Generic<At$λ, ToObj<K>>
+  [Generic.repr]: Generic<At$λ, ToObj<K>>;
   [ComposeAt.Result]: At$Composite$λ
 
   constructor(private readonly key: K) {
@@ -58,7 +58,7 @@ interface At$Composite$λ extends TypeFunction2 {
   type: At$Composite<this["arguments"][0], this["arguments"][1]>
 }
 class At$Composite<T, U> extends At<Composition<T, U>> {
-  [ComposeAt.Result]: At$Composite$λ
+  [ComposeAt.Result]: At$Composite$λ;
   [Generic.repr]: Generic<At$Composite$λ, [T, U]>
 
   constructor(private first: At<T>, private second: At<U>) {

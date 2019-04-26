@@ -1,6 +1,6 @@
-import { Iso, at, Lens } from ".";
+import { Iso, at, Lens } from "."
 
-import { Assert, Eq } from "./TestUtils";
+import { Assert, Eq } from "./TestUtils"
 
 // #region Composing At with Iso
 
