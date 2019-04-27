@@ -1,0 +1,17 @@
+{
+  "name": "@lenses/core",
+  "version": "0.1.0",
+  "author": {
+    "name": "Sami Kukkonen",
+    "email": "sami@samikukkonen.fi"
+  },
+  "license": "MIT",
+  "main": "target/index.js",
+  "typings": "target/index.d.ts",
+  "dependencies": {
+    "tshkt": "0.1.1"
+  },
+  "devDependencies": {
+    "typescript": "*"
+  }
+}

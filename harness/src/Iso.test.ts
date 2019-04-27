@@ -1,4 +1,4 @@
-import { Iso, at, Lens } from "."
+import { Iso, at, Lens } from "@lenses/core/src"
 
 import { Assert, Eq } from "./TestUtils"
 

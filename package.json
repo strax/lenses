@@ -1,12 +1,12 @@
 {
-  "name": "@strax/optics",
-  "version": "1.0.0",
+  "name": "@lenses/workspace",
+  "private": true,
+  "version": "0.0.0",
   "license": "MIT",
-  "main": "target/index.js",
-  "typings": "target/index.d.ts",
-  "dependencies": {
-    "tshkt": "0.1.1"
-  },
+  "workspaces": [
+    "core",
+    "harness"
+  ],
   "devDependencies": {
     "typescript": "^3.5.0-dev.20190426",
     "prettier": "1.17.0"

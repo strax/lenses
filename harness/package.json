@@ -1,0 +1,11 @@
+{
+  "name": "@lenses/harness",
+  "private": true,
+  "version": "0.0.0",
+  "dependencies": {
+    "@lenses/core": "*"
+  },
+  "devDependencies": {
+    "typescript": "*"
+  }
+}

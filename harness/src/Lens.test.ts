@@ -1,6 +1,6 @@
-import { Lens } from "."
+import { Lens } from "@lenses/core/src/Lens"
 import { Assert, Eq } from "./TestUtils"
-import { at } from "./At"
+import { at } from "@lenses/core/src/At"
 
 // #region Composing Lens with Lens
 

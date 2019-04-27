@@ -12,6 +12,11 @@ tshkt@0.1.1:
   resolved "https://registry.yarnpkg.com/tshkt/-/tshkt-0.1.1.tgz#c1bae34cba9b3a98c9359c412496846b16cdc611"
   integrity sha512-mp5+QXZFx2gLgNJJn6RkvDuJSHl9y6HaZktiefg/28gpNpoOn32Q8c5xkoNe0pzDJHKYMQYS//G6OD1DlbiDDw==
 
+typescript@*:
+  version "3.4.5"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.5.tgz#2d2618d10bb566572b8d7aad5180d84257d70a99"
+  integrity sha512-YycBxUb49UUhdNMU5aJ7z5Ej2XGmaIBL0x34vZ82fn3hGvD+bgrMrVDpatgz2f7YxUMJxMkbWxJZeAvDxVe7Vw==
+
 typescript@^3.5.0-dev.20190426:
   version "3.5.0-dev.20190426"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.0-dev.20190426.tgz#fa33976c3c880771ec079be30d94220c38ec86d0"
