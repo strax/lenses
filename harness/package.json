@@ -1,7 +1,11 @@
 {
   "name": "@lenses/harness",
+  "description": "Compilation unit for asserting that the typings are working",
   "private": true,
   "version": "0.0.0",
+  "scripts": {
+    "compile": "tsc --build"
+  },
   "dependencies": {
     "@lenses/core": "*"
   },

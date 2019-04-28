@@ -8,6 +8,9 @@
   "license": "MIT",
   "main": "target/index.js",
   "typings": "target/index.d.ts",
+  "scripts": {
+    "compile": "tsc --build"
+  },
   "dependencies": {
     "tshkt": "0.1.1"
   },

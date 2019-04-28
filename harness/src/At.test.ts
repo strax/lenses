@@ -1,7 +1,6 @@
-import { at, At } from "@lenses/core/src/At"
+import { at, At } from "@lenses/core"
 import { Assert, Eq } from "./TestUtils"
 import { Composition, ToObj } from "@lenses/core/src/TypeFunctions"
-import { Lens } from "@lenses/core/src/Lens"
 
 // #region Composing At with At
 namespace Test$CompositionWithAt {

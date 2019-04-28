@@ -1,5 +1,4 @@
-import { Iso, at, Lens } from "@lenses/core/src"
-
+import { Iso, at, Lens } from "@lenses/core"
 import { Assert, Eq } from "./TestUtils"
 
 // #region Composing At with Iso
