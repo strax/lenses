@@ -19,7 +19,12 @@ export abstract class At<F> {
   }
 
   abstract get<A>(source: Of<F, A>): A
-  abstract set<A, SA extends Of<F, A>>(source: SA, a: A): SA
+
+  set<SA extends Of<F, A>, A>(source: SA, a: A): SA {
+    return this._set(source, a)
+  }
+
+  protected abstract _set<SA extends Of<F, unknown>>(source: SA, a: unknown): SA
 
   compose<G extends TypeFunction2, T>(other: ComposeAt<G, T>): Of<G, [F, T]> {
     return other.composeAt(this)
@@ -48,8 +53,7 @@ class At$AtIndex<K extends string> extends At<ToObj<K>> {
     return source[this.key]
   }
 
-  // @ts-ignore 2416
-  set<A, SA extends Of<ToObj<K>, A>>(source: SA, a: A): SA {
+  protected _set<A, SA extends Of<ToObj<K>, A>>(source: SA, a: A): SA {
     return { ...source, a }
   }
 }
@@ -69,8 +73,7 @@ class At$Composite<T, U> extends At<Composition<T, U>> {
     return this.second.get(this.first.get(source))
   }
 
-  // @ts-ignore 2416
-  set<SA extends Of<Composition<T, U>, A>, A>(source: SA, a: A): SA {
+  protected _set<SA extends Of<Composition<T, U>, A>, A>(source: SA, a: A): SA {
     return this.first.set(source, this.second.set(this.first.get(source) as Of<U, A>, a)) as SA
   }
 

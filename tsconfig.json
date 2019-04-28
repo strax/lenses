@@ -9,5 +9,6 @@
     "sourceMap": true,
     "declarationMap": true
   },
+  "include": [],
   "references": [{ "path": "harness" }, { "path": "core" }]
 }
