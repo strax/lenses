@@ -12,9 +12,10 @@
     "compile": "tsc --build"
   },
   "dependencies": {
-    "tshkt": "0.1.1"
+    "tshkt": "0.1.3"
   },
   "devDependencies": {
-    "typescript": "*"
+    "typescript": "*",
+    "typedoc": "0.14.2"
   }
 }

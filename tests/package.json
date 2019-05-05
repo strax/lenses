@@ -1,0 +1,20 @@
+{
+  "name": "@lenses/tests",
+  "private": true,
+  "description": "Lenses tests",
+  "version": "0.0.0",
+  "scripts": {
+    "pretest": "tsc --build",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@lenses/core": "*",
+    "@lenses/laws": "*",
+    "@types/jest": "24.0.11",
+    "@types/node": "11.13.8",
+    "fast-check": "1.14.0",
+    "jest": "24.7.1",
+    "ts-jest": "^24.0.2",
+    "typescript": "*"
+  }
+}

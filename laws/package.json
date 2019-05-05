@@ -1,0 +1,16 @@
+{
+  "name": "@lenses/laws",
+  "version": "0.1.0",
+  "main": "target/index.js",
+  "typings": "target/index.d.ts",
+  "dependencies": {
+    "@lenses/core": "0.1.0",
+    "pretty-format": "24.7.0"
+  },
+  "devDependencies": {
+    "typescript": "*"
+  },
+  "peerDependencies": {
+    "fast-check": ">= 1.14.0"
+  }
+}

@@ -6,6 +6,9 @@ export namespace ComposeAt {
   export declare const Result: unique symbol
 }
 
+/**
+ * @internal
+ */
 export interface ComposeAt<F extends TypeFunction2, T> {
   [ComposeAt.Result]: F
   composeAt<S>(source: At<S>): Of<F, [S, T]>

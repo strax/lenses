@@ -1,0 +1,8 @@
+{
+  "mode": "file",
+  "out": "target/docs",
+  "excludeNotExported": true,
+  "excludeExternals": true,
+  "excludePrivate": true,
+  "excludeProtected": true
+}

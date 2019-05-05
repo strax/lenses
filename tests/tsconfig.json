@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "outDir": "target",
+    "module": "commonjs",
+    "target": "esnext",
+    "composite": true,
+    "types": ["jest", "node"],
+    "rootDir": "src"
+  },
+  "include": ["src/**/*"],
+  "references": [{ "path": "../core" }, { "path": "../laws" }]
+}

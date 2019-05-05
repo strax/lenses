@@ -2,6 +2,7 @@ import { Of, Repr, Generic } from "tshkt"
 import { Lens } from "./Lens"
 import { ToObj, Composition, TypeFunction2 } from "./TypeFunctions"
 import { ComposeAt } from "./ComposeAt"
+import { Iso } from "./Iso"
 
 interface At$λ extends Repr {
   type: At<this["argument"]>
@@ -54,7 +55,15 @@ class At$AtIndex<K extends string> extends At<ToObj<K>> {
   }
 
   protected _set<A, SA extends Of<ToObj<K>, A>>(source: SA, a: A): SA {
-    return { ...source, a }
+    return { ...source, [this.key]: a }
+  }
+
+  toString() {
+    return `At("${this.key}")`
+  }
+
+  [Symbol.for("nodejs.util.inspect.custom")]() {
+    return this.toString()
   }
 }
 
@@ -80,8 +89,18 @@ class At$Composite<T, U> extends At<Composition<T, U>> {
   reify(): At<Composition<T, U>> {
     return this as At<Composition<T, U>>
   }
+
+  [Symbol.for("nodejs.util.inspect.custom")]() {
+    return `${this.first}.compose(${this.second})`
+  }
 }
 
-export function at<K extends string>(key: K) {
-  return At.at(key)
+export function at<K extends string>(key: K): At$AtIndex<K>
+export function at<T>(): Iso<T, T>
+export function at<K extends string>(key?: K) {
+  if (key) {
+    return At.at(key)
+  } else {
+    return Iso.id()
+  }
 }
