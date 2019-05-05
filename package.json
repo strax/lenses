@@ -13,10 +13,10 @@
     "tests"
   ],
   "devDependencies": {
-    "typescript": "3.5.0-dev.20190503",
+    "typescript": "3.5.0-dev.20190504",
     "prettier": "1.17.0"
   },
   "resolutions": {
-    "typescript": "3.5.0-dev.20190503"
+    "typescript": "3.5.0-dev.20190504"
   }
 }

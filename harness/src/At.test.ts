@@ -1,31 +1,20 @@
-import { at, At } from "@lenses/core"
-import { Assert, Eq } from "./TestUtils"
-import { Composition, ToObj } from "@lenses/core/src/TypeFunctions"
+import { at } from "@lenses/core"
 
-// #region Composing At with At
-namespace Test$CompositionWithAt {
-  const res = at("foo")
-    .compose(at("bar"))
-    .reify()
-  type _ = Assert<Eq<typeof res, At<Composition<ToObj<"foo">, ToObj<"bar">>>>>
-}
-// #endregion
+// Composing At with At
+// $ExpectType At<Composition<ToObj<"foo">, ToObj<"bar">>>
+at("foo")
+  .compose(at("bar"))
+  .reify()
 
-// #region Inferring the value type of composite At
-namespace Test$CompositeAtValueInference {
-  const res = at("foo")
-    .at("bar")
-    .get({ foo: { bar: "value" as const } })
-  // @ts-ignore FIXME: Value type of the optic should be inferred from the source argument
-  type _ = Assert<Eq<typeof res, "value">>
-}
-// #endregion
+// Inferring the value type of composite At
+// FIXME: Value type of the optic should be inferred from the source argument
+// FIXME: $ExpectType "value"
+at("foo")
+  .at("bar")
+  .get({ foo: { bar: "value" as const } })
 
-// #region At#at returns a composite At
-namespace Test$AtAtReturnsCompositeAt {
-  const res = at("foo")
-    .at("bar")
-    .reify()
-  type _ = Assert<Eq<typeof res, At<Composition<ToObj<"foo">, ToObj<"bar">>>>>
-}
-// #endregion
+// At#at returns a composite At
+// $ExpectType At<Composition<ToObj<"foo">, ToObj<"bar">>>
+at("foo")
+  .at("bar")
+  .reify()

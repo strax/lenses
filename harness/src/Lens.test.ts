@@ -1,23 +1,18 @@
 import { Lens, at } from "@lenses/core"
-import { Assert, Eq } from "./TestUtils"
 
 // #region Composing Lens with Lens
-
 namespace Test$CompositionWithLens {
   declare const fst: Lens<[number, [boolean, string]], [boolean, string]>
   declare const snd: Lens<[boolean, string], string>
-  const res = fst.compose(snd)
-  type _ = Assert<Eq<typeof res, Lens<[number, [boolean, string]], string>>>
+  // $ExpectType Lens<[number, [boolean, string]], string>
+  fst.compose(snd)
 }
-
 // #endregion
 
 // #region Composing At with Lens
-
 namespace Test$CompositionWithAt {
   declare const fst: Lens<[number, string], number>
-  const res = at("foo").compose(fst)
-  type _ = Assert<Eq<typeof res, Lens<{ foo: [number, string] }, number>>>
+  // $ExpectType Lens<{ foo: [number, string]; }, number>
+  at("foo").compose(fst)
 }
-
 // #endregion

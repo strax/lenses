@@ -4,12 +4,14 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "compile": "tsc --build"
+    "test": "tslint --project tsconfig.json"
   },
   "dependencies": {
     "@lenses/core": "*"
   },
   "devDependencies": {
-    "typescript": "*"
+    "typescript": "*",
+    "dtslint": "0.7.1",
+    "tslint": "5.16.0"
   }
 }
