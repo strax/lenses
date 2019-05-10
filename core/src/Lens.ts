@@ -9,6 +9,8 @@ import { Affine } from "./Affine"
 import { strict, Prism } from "./Prism"
 import { Fields, Strict } from "./utils"
 import { Option } from "./Option"
+import { ComposeIso } from "./ComposeIso";
+import { ComposePrism } from "./ComposePrism";
 
 interface AtLens$λ<S> extends TypeFunction2 {
   type: Lens<Of<this["arguments"][0], S>, this["arguments"][1]>
@@ -44,7 +46,7 @@ export class Lens<S, A> implements SetterLike<S, A> {
   }
 
   compose<F, B>(other: ComposeLens<F, A, B>): Of<F, [S, B]> {
-    return other.composeLens(this)
+    return other[ComposeLens.composeLens](this)
   }
 
   asAffine(): Affine<S, A> {
@@ -54,21 +56,21 @@ export class Lens<S, A> implements SetterLike<S, A> {
   /**
    * @internal
    */
-  composePrism<T>(prism: Prism<T, S>): Affine<T, A> {
+  [ComposePrism.composePrism]<T>(prism: Prism<T, S>): Affine<T, A> {
     return prism.asAffine().compose(this.asAffine())
   }
 
   /**
    * @internal
    */
-  composeIso<SS>(source: Iso<SS, S>): Lens<SS, A> {
+  [ComposeIso.composeIso]<SS>(source: Iso<SS, S>): Lens<SS, A> {
     return new Lens(ss => this.view(source.view(ss)), ss => a => source.review(this.set(source.view(ss), a)))
   }
 
   /**
    * @internal
    */
-  composeLens<SS>(source: Lens<SS, S>): Lens<SS, A> {
+  [ComposeLens.composeLens]<SS>(source: Lens<SS, S>): Lens<SS, A> {
     return new Lens(ss => this.view(source.view(ss)), ss => a => source.set(ss, this.set(source.view(ss), a)))
   }
 

@@ -1,9 +1,10 @@
 import { Affine } from "./Affine"
 import { Of } from "tshkt"
 
-/**
- * @internal
- */
+export namespace ComposeAffine {
+  export const composeAffine = Symbol("ComposeAffine.composeAffine")
+}
+
 export interface ComposeAffine<F, A, B> {
-  composeAffine<S>(source: Affine<S, A>): Of<F, [S, B]>
+  [ComposeAffine.composeAffine]<S>(source: Affine<S, A>): Of<F, [S, B]>
 }

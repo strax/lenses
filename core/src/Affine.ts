@@ -25,10 +25,10 @@ export class Affine<S, A> {
   }
 
   compose<F, B>(optic: ComposeAffine<F, A, B>): Of<F, [S, B]> {
-    return optic.composeAffine(this)
+    return optic[ComposeAffine.composeAffine](this)
   }
 
-  composeAffine<T>(parent: Affine<T, S>): Affine<T, A> {
+  [ComposeAffine.composeAffine]<T>(parent: Affine<T, S>): Affine<T, A> {
     return new Affine(
       t => parent.preview(t).flatMap(s => this.preview(s)),
       t => a => parent.over(t, (s: S) => this.set(s, a))

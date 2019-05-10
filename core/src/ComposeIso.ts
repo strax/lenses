@@ -1,9 +1,10 @@
 import { Iso } from "./Iso"
 import { Of } from "tshkt"
 
-/**
- * @internal
- */
+export namespace ComposeIso {
+  export const composeIso = Symbol("ComposeIso.composeIso")
+}
+
 export interface ComposeIso<F, A, B, C> {
-  composeIso(source: Iso<A, B>): Of<F, [A, C]>
+  [ComposeIso.composeIso](source: Iso<A, B>): Of<F, [A, C]>
 }

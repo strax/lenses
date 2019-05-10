@@ -6,6 +6,7 @@ import { ComposeAt } from "./ComposeAt"
 import { ComposeIso } from "./ComposeIso"
 import { Fields, Strict } from "./utils"
 import { Affine } from "./Affine"
+import { ComposeLens } from "./ComposeLens";
 
 interface AtIso$λ<A> extends TypeFunction2 {
   type: Lens<Of<this["arguments"][0], A>, this["arguments"][1]>
@@ -45,10 +46,7 @@ export class Iso<T, B> {
     return this.toLens().peek(key)
   }
 
-  /**
-   * @internal
-   */
-  composeLens<S>(source: Lens<S, T>): Lens<S, B> {
+  [ComposeLens.composeLens]<S>(source: Lens<S, T>): Lens<S, B> {
     return new Lens(s => this.view(source.view(s)), s => b => source.set(s, this.review(b)))
   }
 
@@ -59,15 +57,12 @@ export class Iso<T, B> {
     return new Lens(s => this.view(at.get(s)), s => b => at.set(s, this.review(b)))
   }
 
-  /**
-   * @internal
-   */
-  composeIso<AA>(source: Iso<AA, T>): Iso<AA, B> {
+  [ComposeIso.composeIso]<AA>(source: Iso<AA, T>): Iso<AA, B> {
     return new Iso(aa => this.view(source.view(aa)), b => source.review(this.review(b)))
   }
 
   compose<F, C>(other: ComposeIso<F, T, B, C>): Of<F, [T, C]> {
-    return other.composeIso(this)
+    return other[ComposeIso.composeIso](this)
   }
 }
 
