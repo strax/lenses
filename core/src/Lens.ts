@@ -57,9 +57,8 @@ export class Lens<S, A> implements SetterLike<S, A> {
     return new Affine(s => Option.pure(this.view(s)), this._set)
   }
 
-  // @contract ComposeAt<Lens<?, ?>, S, A>
   [ComposeAt.Transform]!: Ap<S>
-  composeAt<F>(source: At<F>) {
+  [ComposeAt.composeAt]<F>(source: At<F>) {
     return source.toLens<S>().compose(this)
   }
 

@@ -1,11 +1,12 @@
 import { Generic, Of } from "tshkt"
 import { At, at } from "./At"
 import { Lens } from "./Lens"
-import { TypeFunction2 } from "./TypeFunctions"
+import { TypeFunction2, Ap } from "./TypeFunctions"
 import { ComposeIso } from "./ComposeIso"
 import { Fields, Strict } from "./utils"
 import { Affine } from "./Affine"
 import { ComposeLens } from "./ComposeLens";
+import { ComposeAt } from "./ComposeAt";
 
 interface AtIso$λ<A> extends TypeFunction2 {
   type: Lens<Of<this["arguments"][0], A>, this["arguments"][1]>
@@ -54,6 +55,11 @@ export class Iso<T, B> {
 
   compose<F, C>(other: ComposeIso<F, T, B, C>): Of<F, [T, C]> {
     return other[ComposeIso.composeIso](this)
+  }
+
+  [ComposeAt.Transform]: Ap<T>
+  [ComposeAt.composeAt]<S>(at: At<S>) {
+    return at.toLens<T>().compose(this)
   }
 }
 

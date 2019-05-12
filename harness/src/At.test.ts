@@ -1,23 +1,22 @@
 import { at } from "@lenses/core"
 
 // #region Composing At with At
-// $ExpectType At<Composition<ToObj<"foo">, ToObj<"bar">>>
+// $ExpectType At<Compose<Ix<"foo">, Ix<"bar">>>
 at("foo")
   .compose(at("bar"))
   .reify()
 // #endregion
 
 // #region Inferring the value type of composite At
-// FIXME: Value type of the optic should be inferred from the source argument
-// FIXME: $ExpectType "value"
+// $ExpectType "value"
 at("foo")
-  .at("bar")
+  .compose(at("bar"))
   .get({ foo: { bar: "value" as const } })
 // #endregion
 
-// #region At#at returns a composite At
-// $ExpectType At<Composition<ToObj<"foo">, ToObj<"bar">>>
+// #region At#compose returns a composite At
+// $ExpectType At<Compose<Ix<"foo">, Ix<"bar">>>
 at("foo")
-  .at("bar")
+  .compose(at("bar"))
   .reify()
 // #endregion

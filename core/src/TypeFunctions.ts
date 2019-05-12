@@ -13,7 +13,7 @@ export interface TypeFunction2 extends Repr {
   arguments: this["argument"] extends [infer A, infer B] ? [A, B] : never
 }
 
-
+export { TypeFunction1 as TFn1, TypeFunction2 as TFn2 }
 
 /**
  * For a type level function f, returns the inverse function of f.

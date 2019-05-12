@@ -1,7 +1,7 @@
 import { Generic, Of, Repr } from "tshkt"
 import { Iso } from "./Iso"
-import { Lens, Lens$λ } from "./Lens"
-import { Compose, Inverse, TypeFunction1, TypeFunction2, Witnessing, Identity, Const, Ap } from "./TypeFunctions"
+import { Lens } from "./Lens"
+import { Compose, Inverse, TFn1, TFn2, Witnessing, Identity, Const, Ap } from "./TypeFunctions"
 import { ComposeAt } from "./ComposeAt";
 
 const inspect = Symbol.for("nodejs.util.inspect.custom")
@@ -13,7 +13,7 @@ const inspect = Symbol.for("nodejs.util.inspect.custom")
  * <K extends string>(key: K) => <A>(value: A) => { [_ in K]: A }
  * ```
  */
-interface Ix<K extends string> extends TypeFunction1, Witnessing<K> {
+interface Ix<K extends string> extends TFn1, Witnessing<K> {
   type: { [_ in K]: this["argument"] }
 }
 
@@ -34,12 +34,12 @@ export abstract class At<F> {
 
   protected abstract _set<SA extends Of<F, unknown>>(source: SA, a: unknown): SA
 
-  compose<λ extends TypeFunction2, A, T>(other: ComposeAt<λ, F, A, T>): Of<λ, [Of<T, F>, A]> {
-    return other.composeAt(this)
+  compose<λ extends TFn2, A, T extends TFn1>(other: ComposeAt<λ, F, A, T>): Of<λ, [Of<T, F>, A]> {
+    return other[ComposeAt.composeAt](this)
   }
 
   [ComposeAt.Transform]!: Identity
-  composeAt<S>(source: At<S>): At$Composite<S, F> {
+  [ComposeAt.composeAt]<S>(source: At<S>): At$Composite<S, F> {
     return new At$Composite(source, this)
   }
 }
@@ -82,7 +82,7 @@ class At$AtIndex<K extends string> extends At<Ix<K>> {
   }
 }
 
-interface At$Composite$λ extends TypeFunction2 {
+interface At$Composite$λ extends TFn2 {
   type: At$Composite<this["arguments"][0], this["arguments"][1]>
 }
 class At$Composite<T, U> extends At<Compose<T, U>> {
