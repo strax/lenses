@@ -3755,10 +3755,10 @@ typedoc@0.14.2:
     typedoc-default-themes "^0.5.0"
     typescript "3.2.x"
 
-typescript@*, typescript@3.2.x, typescript@3.5.0-dev.20190509, typescript@next:
-  version "3.5.0-dev.20190509"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.0-dev.20190509.tgz#28ae52fe31c6d3bd7b95d974c96ae0fe84fc54d6"
-  integrity sha512-jbpXSKOn7BOgAo3/B+4Y5SXf8xTQyqnOeZWZJC2oEhvOJmStwQCRmurzivoZt7yx1oMG7ilhOjFgKtkOaJ1Q4g==
+typescript@*, typescript@3.2.x, typescript@3.5.0-dev.20190511, typescript@next:
+  version "3.5.0-dev.20190511"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.0-dev.20190511.tgz#8f45fc84e6bf0f157a4af719e19bb474e15429ad"
+  integrity sha512-DVkpP1PAHsBSUe0Da6Ze31+NLm++zuS6Cih9N+WekVg9Mh6rnYVrnjJrRwxG1zddqvGaQto4xip4+ZbBA1RRXg==
 
 uglify-js@^3.1.4:
   version "3.5.9"

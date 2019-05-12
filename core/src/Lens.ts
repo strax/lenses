@@ -1,19 +1,23 @@
-import { Generic, Of, Repr } from "tshkt"
-import { Iso } from "./Iso"
-import { TypeFunction2 } from "./TypeFunctions"
-import { At, at } from "./At"
-import { ComposeAt } from "./ComposeAt"
-import { ComposeLens } from "./ComposeLens"
-import { SetterLike } from "./SetterLike"
+import { Generic, Of } from "tshkt"
 import { Affine } from "./Affine"
-import { strict, Prism } from "./Prism"
-import { Fields, Strict } from "./utils"
+import { ComposeIso } from "./ComposeIso"
+import { ComposeLens } from "./ComposeLens"
+import { ComposePrism } from "./ComposePrism"
+import { Iso } from "./Iso"
 import { Option } from "./Option"
-import { ComposeIso } from "./ComposeIso";
-import { ComposePrism } from "./ComposePrism";
+import { Prism, strict } from "./Prism"
+import { SetterLike } from "./SetterLike"
+import { TypeFunction2, Const, TypeFunction1, Witnessing, Ap, Identity } from "./TypeFunctions"
+import { Fields, Strict } from "./utils"
+import { At } from "./At";
+import { ComposeAt } from "./ComposeAt";
 
-interface AtLens$λ<S> extends TypeFunction2 {
-  type: Lens<Of<this["arguments"][0], S>, this["arguments"][1]>
+interface Lens$λ extends TypeFunction2 {
+  type: Lens<this["arguments"][0], this["arguments"][1]>
+}
+
+export namespace Lens {
+  export type Type = Lens$λ
 }
 
 export class Lens<S, A> implements SetterLike<S, A> {
@@ -53,6 +57,12 @@ export class Lens<S, A> implements SetterLike<S, A> {
     return new Affine(s => Option.pure(this.view(s)), this._set)
   }
 
+  // @contract ComposeAt<Lens<?, ?>, S, A>
+  [ComposeAt.Transform]!: Ap<S>
+  composeAt<F>(source: At<F>) {
+    return source.toLens<S>().compose(this)
+  }
+
   /**
    * @internal
    */
@@ -73,20 +83,8 @@ export class Lens<S, A> implements SetterLike<S, A> {
   [ComposeLens.composeLens]<SS>(source: Lens<SS, S>): Lens<SS, A> {
     return new Lens(ss => this.view(source.view(ss)), ss => a => source.set(ss, this.set(source.view(ss), a)))
   }
-
-  [ComposeAt.Result]: AtLens$λ<S>
-
-  /**
-   * @internal
-   */
-  composeAt<F>(source: At<F>): Lens<Of<F, S>, A> {
-    return source.toLens<S>().compose(this)
-  }
 }
 
-export interface Lens$λ extends TypeFunction2 {
-  type: Lens<this["arguments"][0], this["arguments"][1]>
-}
 
 export function fst<A, B>(): Lens<[A, B], A> {
   return new Lens(([a, _]) => a, ([_, b]) => a => [a, b])

@@ -9,39 +9,36 @@ export interface Witnessing<T> {
 }
 
 export interface TypeFunction1 extends Repr {}
-
 export interface TypeFunction2 extends Repr {
   arguments: this["argument"] extends [infer A, infer B] ? [A, B] : never
 }
 
+
+
 /**
- * Maps the given argument to a value indexed by key K.
- * This should be read as
- * ```typescript
- * <K extends string>(key: K) => <A>(value: A) => { [_ in K]: A }
- * ```
+ * For a type level function f, returns the inverse function of f.
  */
-export interface ToObj<K extends string> extends Repr, Witnessing<K> {
-  type: { [_ in K]: this["argument"] }
+export type Inverse<T> = T extends Compose<infer F, infer G> ? InverseC<F, G> : InverseF<T>
+interface InverseC<F, G> extends TypeFunction1, Witnessing<[F, G]> {
+  type: Of<Compose<Inverse<G>, Inverse<F>>, this["argument"]>
+}
+interface InverseF<F> extends TypeFunction1, Witnessing<F> {
+  type: this["argument"] extends Of<F, infer A> ? A : never
 }
 
 /**
  * Encodes a composite function (f ∘ g)
  */
-export interface Composition<F, G> extends Repr, Witnessing<[F, G]> {
-  [Generic.repr]: Generic<Compose, [F, G]>
+export interface Compose<F, G> extends Repr, Witnessing<[F, G]> {
   type: Of<F, Of<G, this["argument"]>>
-}
-
-/**
- * Encodes the function composition operator in the form of `Composition`.
- */
-export interface Compose extends TypeFunction2 {
-  type: Composition<this["arguments"][0], this["arguments"][1]>
 }
 
 export interface Identity extends Repr {
   type: this["argument"]
+}
+
+export interface Ap<A> extends Repr, Witnessing<A> {
+  type: Of<this["argument"], A>
 }
 
 export interface Const<A> extends TypeFunction1, Witnessing<A> {

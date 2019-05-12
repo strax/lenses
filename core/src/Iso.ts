@@ -2,7 +2,6 @@ import { Generic, Of } from "tshkt"
 import { At, at } from "./At"
 import { Lens } from "./Lens"
 import { TypeFunction2 } from "./TypeFunctions"
-import { ComposeAt } from "./ComposeAt"
 import { ComposeIso } from "./ComposeIso"
 import { Fields, Strict } from "./utils"
 import { Affine } from "./Affine"
@@ -13,7 +12,6 @@ interface AtIso$λ<A> extends TypeFunction2 {
 }
 
 export class Iso<T, B> {
-  [ComposeAt.Result]: AtIso$λ<T>;
   [Generic.repr]: Generic<Iso$λ, [T, B]>
 
   static id<A>(): Iso<A, A> {
@@ -48,13 +46,6 @@ export class Iso<T, B> {
 
   [ComposeLens.composeLens]<S>(source: Lens<S, T>): Lens<S, B> {
     return new Lens(s => this.view(source.view(s)), s => b => source.set(s, this.review(b)))
-  }
-
-  /**
-   * @internal
-   */
-  composeAt<S>(at: At<S>): Lens<Of<S, T>, B> {
-    return new Lens(s => this.view(at.get(s)), s => b => at.set(s, this.review(b)))
   }
 
   [ComposeIso.composeIso]<AA>(source: Iso<AA, T>): Iso<AA, B> {
