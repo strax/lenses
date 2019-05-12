@@ -26,6 +26,10 @@ export abstract class At<F> {
     return new Lens(s => this.get(s) as A, s => a => this.set(s, a))
   }
 
+  at<K extends string>(key: K) {
+    return this.compose(at(key))
+  }
+
   abstract get<S extends Of<F, unknown>>(source: S): Of<Inverse<F>, S>
 
   set<SA extends Of<F, A>, A>(source: SA, a: A): SA {
@@ -92,7 +96,7 @@ class At$Composite<T, U> extends At<Compose<T, U>> {
     super()
   }
 
-  get<S extends Of<Inverse<Compose<T, U>>, unknown>>(source: S): Of<Compose<Inverse<U>, Inverse<T>>, S> {
+  get<S extends Of<Inverse<Compose<T, U>>, unknown>>(source: S): Of<Inverse<Compose<T, U>>, S> {
     // TODO: Check if these `any` casts can be removed
     return this.second.get(this.first.get(source as any) as any)
   }
